@@ -21,14 +21,15 @@
 #import <WebKit/WebKit.h>
 #import <Masonry.h>
 #import "UIView+Extension.h"
+#import "XQloading-CAShaplayer.h"
 
-@interface themeContentViewController ()<ContentToolsViewDelegate, avaterviewDelegate>
+@interface themeContentViewController ()<ContentToolsViewDelegate, avaterviewDelegate, XQloading_CAShaplayeDelegate, WKUIDelegate, WKNavigationDelegate>
 @property (weak, nonatomic) IBOutlet avaterView         *avaterview;
 @property (weak, nonatomic) IBOutlet ContentToolsView   *contentTools;
 //@property (weak, nonatomic) IBOutlet UIWebView          *webContentView;
 @property (strong, nonatomic)  WKWebView          *webContentView;
 //@property (weak, nonatomic) IBOutlet NSLayoutConstraint *webtoViewConstrainsTOP;
-
+@property (strong, nonatomic) XQloading_CAShaplayer *loading;
 @end
 
 @implementation themeContentViewController{
@@ -38,6 +39,17 @@
 /**
  *  懒加载
  */
+-(XQloading_CAShaplayer *)loading{
+    if (!_loading) {
+        _loading =[[XQloading_CAShaplayer alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.view.height -44)];
+        _loading.backgroundColor = [UIColor whiteColor];
+        _loading.delegate = self;
+        [self.view addSubview:_loading];
+        [_loading SetErrorText:@"网络错误请重试"];
+        [_loading SetlayersLineWidth:5 strokeColor:[UIColor lightGrayColor] layerFrameAndPath:CGRectMake(0, 0, 40, 40)];
+    }
+    return _loading;
+}
 -(WKWebView *)webContentView{
     if (!_webContentView) {
         /// 配置configuration 保证全屏
@@ -48,6 +60,8 @@
         WKWebViewConfiguration *wkWebConfig = [[WKWebViewConfiguration alloc] init];
         wkWebConfig.userContentController = wkUController;
         _webContentView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height- 64 -44) configuration:wkWebConfig];
+        _webContentView.UIDelegate= self;
+        _webContentView.navigationDelegate = self;
 
 
     }
@@ -71,16 +85,18 @@
     themeContentModel *sqlModel =  [themeStorySQLTool readSQLThemeStoryWithid:self.model.id];
     if (sqlModel) {
         //数据库中-有就加载数据库中的模型，（有一种body是空的，没有存）
-        NSLog(@"数据库中有数据");
+//        NSLog(@"数据库中有数据");
         [self loadHtml:sqlModel];
     }else{
-        NSLog(@"没有数据");
+//        NSLog(@"没有数据");
         //数据库中-没有-发送请求，（有一种body是空的）
         [NewsRequest GETThemesWithID:self.model.id Succees:^(id dic) {
+
             //成功返回数据，转模型存取sqlite
+
             themeContentModel *model = [themeContentModel mj_objectWithKeyValues:dic];
             [themeStorySQLTool SaveThemeStory:model];
-            NSLog(@"avater-----%lu",(unsigned long)model.recommenders.count);
+//            NSLog(@"avater-----%lu",(unsigned long)model.recommenders.count);
             //模型中body空
             if (model.body) {
                     [self loadHtml:model];
@@ -89,7 +105,7 @@
                     [self.webContentView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:model.share_url]]];
             }
         } Error:^(NSError *error) {
-            
+            [self.loading waitReload];
         }];
     }
 
@@ -123,7 +139,18 @@
 
 
 }
+-(void)NextNewsAnimation{
+    CGAffineTransform offsetUp = CGAffineTransformMakeTranslation(0, -self.view.height);
+    UIEdgeInsets edge = UIEdgeInsetsMake(0, 0, 0, 0);
+    UIView *fromView = [self.view resizableSnapshotViewFromRect:self.webContentView.frame afterScreenUpdates:YES withCapInsets:edge];
+    [self.view addSubview:fromView];
+    [UIView animateWithDuration:0.7 animations:^{
+        fromView.transform = offsetUp;
+    } completion:^(BOOL finished) {
+        [fromView removeFromSuperview];
+    }];
 
+}
 
 #pragma mark - toolsbarDelegate
 /**
@@ -137,13 +164,13 @@
             break;
         case next:
             NSLog(@"下一个");
-            
+//            [self NextNewsAnimation];
             NSInteger count = self.storysArray.count;
             if (index < count - 1) {
-
+                [self NextNewsAnimation];
                 index++;
                 self.model = self.storysArray[index];
-                NSLog(@"ids%ld",(long)self.model.id);
+//                NSLog(@"ids%ld",(long)self.model.id);
                 [self NextNewsWithid:self.model.id];
 
             }
@@ -173,6 +200,34 @@
 
 }
 /**
+ *  载入动画，网络请求失败代理
+ */
+-(void)reload{
+
+
+}
+#pragma mark - wkwebviewnavidelegate
+/**
+ *  开始加载
+ */
+-(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
+    [self.loading StartAnimation];
+
+}
+/**
+ *  完成加载
+ */
+-(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
+
+    [self.loading StopAnimation];
+}
+/**
+ *  失败
+ */
+-(void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+    [self.loading waitReload];
+}
+/**
  *  点击主编view push控制器
  *
  *  @param editorsArray 主编模型
@@ -198,6 +253,7 @@
         NSLog(@"没有数据");
         //数据库中-没有-发送请求，（有一种body是空的）
         [NewsRequest GETThemesWithID:ids Succees:^(id dic) {
+//            [self.loading StopAnimation];
             //成功返回数据，转模型存取sqlite
             themeContentModel *model = [themeContentModel mj_objectWithKeyValues:dic];
             [themeStorySQLTool SaveThemeStory:model];

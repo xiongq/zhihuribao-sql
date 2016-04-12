@@ -334,6 +334,7 @@ static CGFloat const SideMenuAnimationDuration = 0.5f;
         if (offsetx >= 120) {
             [self showSideMenu:nil];
         }else{
+            NSLog(@"hiden");
             [self hidenSideMenus];
         }
     }

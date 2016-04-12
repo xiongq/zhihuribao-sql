@@ -74,7 +74,7 @@
     //发送推荐者请求
     self.editorsArray = [NSMutableArray new];
     [NewsRequest avaterWithID:ids Succees:^(id dic) {
-        NSLog(@"dic%@",dic );
+//        NSLog(@"dic%@",dic );
 
         NSArray *temp = dic[@"items"];
 //        sideThemeListModel *model;

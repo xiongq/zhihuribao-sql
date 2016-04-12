@@ -161,7 +161,7 @@ static NewsRequest *_request;
 +(void)avaterWithID:(NSInteger)ids Succees:(success)Success Error:(error)Error{
 
     NSString *urlstr = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/story/%@/recommenders",[NSString stringWithFormat:@"%ld", (long)ids]];
-    NSLog(@"url%@",urlstr);
+//    NSLog(@"url%@",urlstr);
     AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
     manger.requestSerializer  = [AFHTTPRequestSerializer serializer];
     manger.responseSerializer = [AFJSONResponseSerializer serializer];

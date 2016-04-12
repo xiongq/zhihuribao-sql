@@ -48,7 +48,7 @@
     return self;
 }
 -(void)test{
-    NSLog(@"fuck%@",self.TopStroyTitle.text);
+//    NSLog(@"fuck%@",self.TopStroyTitle.text);
     if ([self.delegate respondsToSelector:@selector(touchImage:)]) {
         [self.delegate touchImage:self.TopStroyTitle.text];
     }

@@ -15,7 +15,8 @@
 #import <MJExtension.h>
 #import "testViewController.h"
 #import "SideThemeAndThemeStorySQL.h"
-#import <UINavigationController+FDFullscreenPopGesture.h>
+
+//#import <UINavigationController+FDFullscreenPopGesture.h>
 
 @interface SideMenuViewController ()<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *sideMenu;
@@ -56,7 +57,7 @@ static NSString *const cellIdentifier = @"cells";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.fd_interactivePopDisabled     = YES;
+//    self.fd_interactivePopDisabled     = YES;
     [self.sideMenu registerNib:[UINib nibWithNibName:@"SideMenuTableViewCell" bundle:nil] forCellReuseIdentifier:@"cells"];
     self.sideMenu.dataSource = self;
     self.sideMenu.delegate = self;
@@ -122,13 +123,14 @@ static NSString *const cellIdentifier = @"cells";
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    UIColor *backgroundColor = [UIColor colorWithRed:0.106 green:0.125 blue:0.141 alpha:1];
-    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
-    gradientLayer.frame = self.sideMenu.bounds;
-    gradientLayer.colors =
-    @[ (id)[UIColor clearColor].CGColor, (id)backgroundColor.CGColor];
-    gradientLayer.endPoint = CGPointMake(0.5, 0.8);
-    gradientLayer.startPoint = CGPointMake(0.5, 1);
-    self.sideMenu.layer.mask = gradientLayer;
+//    NSLog(@"%@",NSStringFromCGPoint(scrollView.contentOffset));
+//    UIColor *backgroundColor = [UIColor colorWithRed:0.106 green:0.125 blue:0.141 alpha:1];
+//    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+//    gradientLayer.frame = self.sideMenu.bounds;
+//    gradientLayer.colors =
+//    @[ (id)[UIColor clearColor].CGColor, (id)backgroundColor.CGColor];
+//    gradientLayer.endPoint = CGPointMake(0.5, 0.8);
+//    gradientLayer.startPoint = CGPointMake(0.5, 1);
+//    self.sideMenu.layer.mask = gradientLayer;
 }
 @end
