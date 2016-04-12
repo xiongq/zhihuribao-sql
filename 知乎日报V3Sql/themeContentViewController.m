@@ -91,6 +91,7 @@
 
 
 }
+#warning 做动画
 -(void)loadHtml:(themeContentModel *)model{
 //    http://news-at.zhihu.com/api/4/story/7015707/recommenders 这是推荐者
     if ([model.recommenders firstObject]) {
