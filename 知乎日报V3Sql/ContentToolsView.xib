@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContentToolsView">
+            <connections>
+                <outlet property="arrow" destination="7uh-1I-SNq" id="tb8-j6-sLC"/>
+                <outlet property="comment" destination="NGm-v0-Hz5" id="fWk-OY-35q"/>
+                <outlet property="next" destination="TtP-Zh-ko1" id="Jn4-vO-i2e"/>
+                <outlet property="share" destination="grq-If-QYh" id="lH0-um-kOW"/>
+                <outlet property="test" destination="iN0-l3-epB" id="isM-LZ-DGb"/>
+                <outlet property="vote" destination="1sX-mM-cnj" id="VXs-Ro-902"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="4JE-xf-FH2">
+                    <rect key="frame" x="120" y="0.0" width="360" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uh-1I-SNq" userLabel="arrow">
+                            <rect key="frame" x="0.0" y="0.0" width="64" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="64" id="eIf-wO-jhs"/>
+                                <constraint firstAttribute="height" constant="44" id="oa8-te-Bgp"/>
+                            </constraints>
+                            <state key="normal" image="News_Navigation_Arrow"/>
+                            <state key="highlighted" image="News_Navigation_Arrow_Highlight"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TtP-Zh-ko1" userLabel="next">
+                            <rect key="frame" x="74" y="0.0" width="64" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="64" id="SP6-sQ-UE2"/>
+                                <constraint firstAttribute="height" constant="44" id="V05-tg-R13"/>
+                            </constraints>
+                            <state key="normal" image="News_Navigation_Next"/>
+                            <state key="highlighted" image="News_Navigation_Next_Highlight"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1sX-mM-cnj" userLabel="vote">
+                            <rect key="frame" x="148" y="0.0" width="64" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="64" id="7mj-ew-hpK"/>
+                                <constraint firstAttribute="height" constant="44" id="xfJ-MN-ArU"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="7"/>
+                            <inset key="titleEdgeInsets" minX="-45" minY="0.0" maxX="0.0" maxY="19"/>
+                            <state key="normal" image="News_Navigation_Vote">
+                                <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" image="News_Navigation_Voted"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="grq-If-QYh" userLabel="share">
+                            <rect key="frame" x="222" y="0.0" width="64" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="gmp-3i-Lg1"/>
+                                <constraint firstAttribute="width" constant="64" id="xUT-cO-VnI"/>
+                            </constraints>
+                            <state key="normal" image="News_Navigation_Share"/>
+                            <state key="highlighted" image="News_Navigation_Share_Highlight"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NGm-v0-Hz5" userLabel="comment">
+                            <rect key="frame" x="296" y="0.0" width="64" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="64" id="GTi-NH-3FX"/>
+                                <constraint firstAttribute="height" constant="44" id="gAj-9B-SIk"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="7"/>
+                            <inset key="titleEdgeInsets" minX="-45" minY="0.0" maxX="0.0" maxY="19"/>
+                            <state key="normal" image="News_Navigation_Comment">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="highlighted" image="News_Navigation_Comment_Highlight"/>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="4JE-xf-FH2" secondAttribute="bottom" id="2xo-Yi-Ns3"/>
+                <constraint firstItem="4JE-xf-FH2" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="3Hp-dj-oKB"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="385" y="423"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="News_Navigation_Arrow" width="64" height="43"/>
+        <image name="News_Navigation_Arrow_Highlight" width="64" height="43"/>
+        <image name="News_Navigation_Comment" width="64" height="43"/>
+        <image name="News_Navigation_Comment_Highlight" width="64" height="43"/>
+        <image name="News_Navigation_Next" width="64" height="43"/>
+        <image name="News_Navigation_Next_Highlight" width="64" height="43"/>
+        <image name="News_Navigation_Share" width="64" height="43"/>
+        <image name="News_Navigation_Share_Highlight" width="64" height="43"/>
+        <image name="News_Navigation_Vote" width="64" height="43"/>
+        <image name="News_Navigation_Voted" width="64" height="43"/>
+    </resources>
+</document>

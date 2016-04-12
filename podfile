@@ -1,0 +1,6 @@
+pod 'Masonry'
+pod 'AFNetworking'
+pod 'FMDB'
+pod 'MJExtension'
+pod 'SDWebImage'
+pod 'FDFullscreenPopGesture'
