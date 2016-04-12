@@ -4,7 +4,8 @@
 //
 //  Created by xiong on 16/3/30.
 //  Copyright © 2016年 xiong. All rights reserved.
-//
+//  换成WKWebview
+
 
 #import "themeContentViewController.h"
 #import "avaterView.h"
@@ -34,15 +35,16 @@
 
     NSInteger index;
 }
+/**
+ *  懒加载
+ */
 -(WKWebView *)webContentView{
     if (!_webContentView) {
-
+        /// 配置configuration 保证全屏
         NSString *jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";
-
         WKUserScript *wkUScript = [[WKUserScript alloc] initWithSource:jScript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
         WKUserContentController *wkUController = [[WKUserContentController alloc] init];
         [wkUController addUserScript:wkUScript];
-
         WKWebViewConfiguration *wkWebConfig = [[WKWebViewConfiguration alloc] init];
         wkWebConfig.userContentController = wkUController;
         _webContentView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height- 64 -44) configuration:wkWebConfig];
@@ -54,6 +56,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    /**
+     *  隐藏当前控制器navibar，及顶部空白
+     */
     self.fd_prefersNavigationBarHidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.webContentView];
@@ -91,14 +96,17 @@
 
 
 }
-#warning 做动画
+
 -(void)loadHtml:(themeContentModel *)model{
 //    http://news-at.zhihu.com/api/4/story/7015707/recommenders 这是推荐者
     if ([model.recommenders firstObject]) {
         self.avaterview.hidden = NO;
-//        self.webtoViewConstrainsTOP.constant = 64;
+        /**
+         *  顶部主编视图的显示隐藏，更改webview尺寸
+         */
         self.webContentView.y = 64;
         self.webContentView.height = self.view.height - 64 -44;
+
         [self.avaterview newsID:model.id];
         [self.avaterview sendEditorsArray:(NSMutableArray *)model.recommenders];
     }else{
@@ -115,6 +123,12 @@
 
 
 }
+
+
+#pragma mark - toolsbarDelegate
+/**
+ *  工具栏delegate
+ */
 -(void)TouchinsideBtnType:(BtnType)BtnType{
     switch (BtnType) {
         case arrows:
@@ -158,13 +172,22 @@
     }
 
 }
-
+/**
+ *  点击主编view push控制器
+ *
+ *  @param editorsArray 主编模型
+ */
 -(void)avaterTouch:(NSMutableArray *)editorsArray{
     AvaterViewController *avaterVC = [self.storyboard instantiateViewControllerWithIdentifier:@"avatervc"];
     avaterVC.editerArray = editorsArray;
     [self.navigationController pushViewController:avaterVC animated:YES];
 
 }
+/**
+ *  通过id查找文章
+ *
+ *  @param ids id
+ */
 -(void)NextNewsWithid:(NSInteger)ids{
     themeContentModel *sqlModel =  [themeStorySQLTool readSQLThemeStoryWithid:ids];
     if (sqlModel) {
