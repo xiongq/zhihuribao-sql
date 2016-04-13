@@ -33,7 +33,7 @@
 @end
 
 @implementation themeContentViewController{
-
+    BOOL isanimation;
     NSInteger index;
 }
 /**
@@ -163,14 +163,22 @@
             [self.navigationController popViewControllerAnimated:YES];
             break;
         case next:
+
+
             NSLog(@"下一个");
-//            [self NextNewsAnimation];
+
             NSInteger count = self.storysArray.count;
             if (index < count - 1) {
                 [self NextNewsAnimation];
+                
+                if (isanimation == NO) {
+                    [self.loading StartAnimation];
+                    isanimation = YES;
+                }
+
                 index++;
                 self.model = self.storysArray[index];
-//                NSLog(@"ids%ld",(long)self.model.id);
+
                 [self NextNewsWithid:self.model.id];
 
             }
@@ -211,7 +219,11 @@
  *  开始加载
  */
 -(void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
-    [self.loading StartAnimation];
+    if (isanimation == NO) {
+        [self.loading StartAnimation];
+        isanimation = YES;
+    }
+
 
 }
 /**
@@ -220,6 +232,7 @@
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
 
     [self.loading StopAnimation];
+    isanimation = NO;
 }
 /**
  *  失败
