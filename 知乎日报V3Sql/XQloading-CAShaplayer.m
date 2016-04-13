@@ -21,7 +21,7 @@
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     _layers = [CAShapeLayer layer];
-    NSLog(@"%@",NSStringFromCGRect( frame));
+//    NSLog(@"%@",NSStringFromCGRect( frame));
     return self;
 }
 
@@ -33,7 +33,7 @@
     _layers.frame       = rect;
 //    _layers.position    = self.center;
     _layers.position = CGPointMake(self.frame.size.width*0.5, self.frame.size.height *0.5);
-    NSLog(@"%@",NSStringFromCGPoint( self.center));
+//    NSLog(@"%@",NSStringFromCGPoint( self.center));
     _layers.path        = [UIBezierPath bezierPathWithOvalInRect:rect].CGPath;
     _layers.strokeEnd   = 0;  //开始位置
     tempRect            = rect;
