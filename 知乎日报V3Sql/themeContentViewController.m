@@ -4,7 +4,7 @@
 //
 //  Created by xiong on 16/3/30.
 //  Copyright © 2016年 xiong. All rights reserved.
-//  换成WKWebview
+//  换成WKWebview 还有处bug：loading动画时作者view层级不应该在loadingview之上
 
 
 #import "themeContentViewController.h"
@@ -75,7 +75,7 @@
      */
     self.fd_prefersNavigationBarHidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self.view addSubview:self.webContentView];
+
 
 
 
@@ -109,7 +109,7 @@
         }];
     }
 
-
+    [self.view addSubview:self.webContentView];
 
 }
 

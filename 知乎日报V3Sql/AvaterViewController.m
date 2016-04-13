@@ -49,7 +49,7 @@
         NSLog(@"zhihu_url_token%@",editor.zhihu_url_token);
         avaterURL = [NSString stringWithFormat:@"https://www.zhihu.com/people/%@",editor.zhihu_url_token];
     }else{
-        avaterURL = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/editor/%ld/profile-page/ios",avater];
+        avaterURL = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/editor/%ld/profile-page/ios",(long)avater];
 
     }
 

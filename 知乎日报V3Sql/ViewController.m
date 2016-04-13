@@ -122,6 +122,7 @@ static CGFloat const SideMenuAnimationDuration = 0.5f;
 
 #pragma mark 生命周期
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BackTop) name:@"backTop" object:nil];
 }
@@ -365,7 +366,7 @@ static CGFloat const SideMenuAnimationDuration = 0.5f;
     NSInteger row;
     NSInteger sectiong;
 
-    NSString *date = [ZFSqlTools StoryWithids:[NSString stringWithFormat:@"%lu",ids]];
+    NSString *date = [ZFSqlTools StoryWithids:[NSString stringWithFormat:@"%lu",(long)ids]];
     for (int i = 0; i < self.menuItems.count; i++) {
         if ([date isEqualToString:self.sectionTitleAray[i]]) {
             sectiong  = i;
