@@ -29,6 +29,10 @@
 		C83D5D661CABEE1D00B2597D /* themeStorySQLTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C83D5D651CABEE1D00B2597D /* themeStorySQLTool.m */; };
 		C84D560A1CA505B200A97CD0 /* testViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84D56091CA505B200A97CD0 /* testViewController.m */; };
 		C85FFFBC1CA4EF7500991AC3 /* sideModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C85FFFBB1CA4EF7500991AC3 /* sideModel.m */; };
+		C86C26891CBF82C4005EB9C5 /* commentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C86C26881CBF82C4005EB9C5 /* commentsViewController.m */; };
+		C86C268D1CBF83CA005EB9C5 /* commentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C86C268B1CBF83CA005EB9C5 /* commentsCell.m */; };
+		C86C268E1CBF83CA005EB9C5 /* commentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C86C268C1CBF83CA005EB9C5 /* commentsCell.xib */; };
+		C86C26911CBF8AF0005EB9C5 /* commentsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C86C26901CBF8AF0005EB9C5 /* commentsModel.m */; };
 		C87652601C9A757E003C3138 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C876525F1C9A757E003C3138 /* main.m */; };
 		C87652631C9A757E003C3138 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C87652621C9A757E003C3138 /* AppDelegate.m */; };
 		C87652661C9A757E003C3138 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C87652651C9A757E003C3138 /* ViewController.m */; };
@@ -110,6 +114,13 @@
 		C84D56091CA505B200A97CD0 /* testViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = testViewController.m; sourceTree = "<group>"; };
 		C85FFFBA1CA4EF7500991AC3 /* sideModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sideModel.h; sourceTree = "<group>"; };
 		C85FFFBB1CA4EF7500991AC3 /* sideModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = sideModel.m; sourceTree = "<group>"; };
+		C86C26871CBF82C4005EB9C5 /* commentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commentsViewController.h; sourceTree = "<group>"; };
+		C86C26881CBF82C4005EB9C5 /* commentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = commentsViewController.m; sourceTree = "<group>"; };
+		C86C268A1CBF83CA005EB9C5 /* commentsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commentsCell.h; sourceTree = "<group>"; };
+		C86C268B1CBF83CA005EB9C5 /* commentsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = commentsCell.m; sourceTree = "<group>"; };
+		C86C268C1CBF83CA005EB9C5 /* commentsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = commentsCell.xib; sourceTree = "<group>"; };
+		C86C268F1CBF8AF0005EB9C5 /* commentsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = commentsModel.h; sourceTree = "<group>"; };
+		C86C26901CBF8AF0005EB9C5 /* commentsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = commentsModel.m; sourceTree = "<group>"; };
 		C876525B1C9A757E003C3138 /* 知乎日报V3Sql.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "知乎日报V3Sql.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C876525F1C9A757E003C3138 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C87652611C9A757E003C3138 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -325,8 +336,9 @@
 				C8E571441CA8F87600B96C66 /* 栏目控制器 */,
 				C83D5D571CABA3B300B2597D /* 主编控制器 */,
 				C898A7FF1CB7746A009E43A8 /* 栏目详情控制器 */,
-				C87B2AAD1CBB9A71001A95D9 /* avaterINFOWebview.h */,
-				C87B2AAE1CBB9A71001A95D9 /* avaterINFOWebview.m */,
+				C86C26831CBF7F6D005EB9C5 /* 主编作者信息控制器 */,
+				C86C26871CBF82C4005EB9C5 /* commentsViewController.h */,
+				C86C26881CBF82C4005EB9C5 /* commentsViewController.m */,
 			);
 			name = "控制器";
 			sourceTree = "<group>";
@@ -379,6 +391,15 @@
 				C83D5D511CAB97E600B2597D /* AvaterTableViewCell.xib */,
 			);
 			name = "主编控制器cell";
+			sourceTree = "<group>";
+		};
+		C86C26831CBF7F6D005EB9C5 /* 主编作者信息控制器 */ = {
+			isa = PBXGroup;
+			children = (
+				C87B2AAD1CBB9A71001A95D9 /* avaterINFOWebview.h */,
+				C87B2AAE1CBB9A71001A95D9 /* avaterINFOWebview.m */,
+			);
+			name = "主编作者信息控制器";
 			sourceTree = "<group>";
 		};
 		C87652521C9A757E003C3138 = {
@@ -467,6 +488,11 @@
 				C83D5D4E1CAB97B900B2597D /* 详情 */,
 				C8E571431CA8F85A00B96C66 /* 栏目顶部特性图片 */,
 				C83D5D581CABA3C700B2597D /* 主编控制器cell */,
+				C86C268A1CBF83CA005EB9C5 /* commentsCell.h */,
+				C86C268B1CBF83CA005EB9C5 /* commentsCell.m */,
+				C86C268C1CBF83CA005EB9C5 /* commentsCell.xib */,
+				C86C268F1CBF8AF0005EB9C5 /* commentsModel.h */,
+				C86C26901CBF8AF0005EB9C5 /* commentsModel.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -760,6 +786,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C86C268E1CBF83CA005EB9C5 /* commentsCell.xib in Resources */,
 				C80138171C9BA94B00A834FE /* oneTopStoryImageAndTittle.xib in Resources */,
 				C87652791C9A75D5003C3138 /* SideMenuViewController.xib in Resources */,
 				C83D5D531CAB97E600B2597D /* AvaterTableViewCell.xib in Resources */,
@@ -866,9 +893,12 @@
 				C8A1ECB01C9F837300140841 /* ZFSqlTools.m in Sources */,
 				C83D5D601CABE71D00B2597D /* themeContentViewController.m in Sources */,
 				C87652601C9A757E003C3138 /* main.m in Sources */,
+				C86C268D1CBF83CA005EB9C5 /* commentsCell.m in Sources */,
+				C86C26911CBF8AF0005EB9C5 /* commentsModel.m in Sources */,
 				C8A1ECBC1C9F893400140841 /* NewsRequest.m in Sources */,
 				C8FA606C1CACE1D000DE1651 /* avaterEditorSQL.m in Sources */,
 				C8E5713C1CA7DA7600B96C66 /* themeIMG.m in Sources */,
+				C86C26891CBF82C4005EB9C5 /* commentsViewController.m in Sources */,
 				C80138101C9BA8BF00A834FE /* TopStoryScrollView.m in Sources */,
 				C834FE711CA2981A003F7444 /* ContentToolsView.m in Sources */,
 				C834FE691CA277B0003F7444 /* StatusWindow.m in Sources */,
