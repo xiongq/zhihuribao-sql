@@ -8,6 +8,7 @@
 
 #import "NewsContentViewController.h"
 #import "checkDiscussionViewController.h"
+#import "commentsViewController.h"
 
 #import "WebControllerContentPicView.h"
 #import "WebContentView.h"
@@ -20,6 +21,7 @@
 
 #import "ZHNewsModel.h"
 #import "ZHHomeListModel.h"
+#import "commentsModel.h"
 
 #import <AFNetworking.h>
 #import <MJExtension.h>
@@ -47,6 +49,10 @@
     NSIndexPath *path;
     /** 是否拿到数据*/
     BOOL isachieve;
+
+    ZHNewsModel *tempModel;
+
+    NSString *tempdic;
 }
 -(XQloading_CAShaplayer *)loading{
     if (!_loading) {
@@ -114,6 +120,7 @@
         ZHNewsModel *model =[ZHNewsModel mj_objectWithKeyValues:responseObject];
         [self.topPicView setImageWithTitle:model];
         [self.webContent loadWeb:model];
+        tempModel = model;
         isachieve = NO;
         path = paths;
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -123,7 +130,8 @@
 
     [manger GET:storyCommitUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [self.ContentTools setComments:responseObject];
-//        NSLog(@"%@",responseObject);
+        NSLog(@"%@",responseObject[@"comments"]);
+        tempdic = responseObject[@"comments"];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         NSLog(@"com--错误%@",error);
     }];
@@ -234,11 +242,18 @@
             break;
         case comment:
             NSLog(@"评论");
+//            [self commentsWithids:tempModel.id];
+            commentsViewController *com = [self.storyboard instantiateViewControllerWithIdentifier:@"comments"];
+            com.sumcomm = [NSString stringWithFormat:@"%@条评论",tempdic];
+            com.ids = tempModel.id;
+
+            [self.navigationController pushViewController:com animated:YES];
             break;
-        default:
-            break;
+
     }
 }
+
+
 /**
  *  scrollview代理
  */
