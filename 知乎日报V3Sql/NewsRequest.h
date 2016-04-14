@@ -16,7 +16,15 @@ typedef void(^error)(NSError *error);
 @property(strong, nonatomic) void (^testblock)(NSDictionary *dic);
 +(void)todayNEWSRequest;
 +(void)nextNEWSRequsetWith:(NSString *)days;
-
+/**
+ *  评论请求
+ *
+ *  @param urlstr  ids
+ *  @param Success model
+ *  @param Error   error
+ */
++(void)shortCommentsWithIds:(NSInteger)ids Succees:(success)Success Error:(error)Error;
++(void)longCommentsWithIds:(NSInteger)ids Succees:(success)Success Error:(error)Error;
 
 +(void)GETHTTPwithThemes:(NSString *)urlstr Succees:(success)Success Error:(error)Error;
 +(void)avaterWithID:(NSInteger)ids Succees:(success)Success Error:(error)Error;

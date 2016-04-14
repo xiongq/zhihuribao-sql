@@ -198,5 +198,42 @@ static NewsRequest *_request;
     }];
 }
 
++(void)shortCommentsWithIds:(NSInteger)ids Succees:(success)Success Error:(error)Error{
 
+    NSString *urlstr = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/story/%@/short-comments",[NSString stringWithFormat:@"%ld", (long)ids]];
+    AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
+    manger.requestSerializer  = [AFHTTPRequestSerializer serializer];
+    manger.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manger GET:urlstr parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (responseObject) {
+            if (Success) {
+                Success(responseObject);
+            }
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (Error) {
+            Error(error);
+        }
+    }];
+
+}
++(void)longCommentsWithIds:(NSInteger)ids Succees:(success)Success Error:(error)Error{
+
+    NSString *urlstr = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/story/%@/long-comments",[NSString stringWithFormat:@"%ld", (long)ids]];
+    AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
+    manger.requestSerializer  = [AFHTTPRequestSerializer serializer];
+    manger.responseSerializer = [AFJSONResponseSerializer serializer];
+    [manger GET:urlstr parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (responseObject) {
+            if (Success) {
+                Success(responseObject);
+            }
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (Error) {
+            Error(error);
+        }
+    }];
+    
+}
 @end
