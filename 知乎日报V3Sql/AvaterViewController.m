@@ -27,7 +27,7 @@
     self.fd_prefersNavigationBarHidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.avaterTableview registerNib:[UINib nibWithNibName:@"AvaterTableViewCell" bundle:nil] forCellReuseIdentifier:@"avatercell"];
-    self.avaterTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.avaterTableview.tableFooterView = [[UIView alloc] init];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;

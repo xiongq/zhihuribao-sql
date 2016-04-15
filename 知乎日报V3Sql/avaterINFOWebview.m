@@ -38,8 +38,7 @@
 //    https://news-at.zhihu.com/api/4/news/latest8123992
 //    NSString *temp = @"https://news-at.zhihu.com/api/4/news/latest8123992";
     [self.avaterWEB loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.avaterurl]]];
-//    NSLog(@"%@",self.avaterurl);
-//    [self.avaterWEB loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:temp]]];
+
 }
 
 - (void)didReceiveMemoryWarning {
