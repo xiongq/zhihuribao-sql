@@ -46,5 +46,20 @@
     return [MMddString stringByAppendingString:week];
 
 }
+/**
+ *
+ *  秒转换时间
+ *  @param time
+ *  HH大写是24小时
+ *  @return string
+ */
++(NSString *)formateDateWithTime:(NSInteger)time{
+    NSDate *date = [NSDate new];
+    NSTimeInterval seconds = (NSTimeInterval)time;
+    date = [NSDate dateWithTimeIntervalSince1970:seconds];
+    NSDateFormatter *formate = [NSDateFormatter new];
+    [formate setDateFormat:@"MM-dd HH:mm"];
+    return [formate stringFromDate:date];
 
+}
 @end

@@ -14,4 +14,6 @@
 /**传时间过来计算前天日期*/
 +(NSString *)nextDataBeforeDays:(NSInteger)days;
 +(NSString *)weeksWithDays:(NSString *)day;
+/**秒转24小时*/
++(NSString *)formateDateWithTime:(NSInteger)time;
 @end
