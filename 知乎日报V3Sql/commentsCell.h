@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @interface commentsCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentTextViewBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *replyTextViewHeight;
 @property (weak, nonatomic) IBOutlet UIImageView *avaterImageView;
 @property (weak, nonatomic) IBOutlet UILabel *likesLabei;
 @property (weak, nonatomic) IBOutlet UIImageView *likesIcon;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabei;
 
 @property (weak, nonatomic) IBOutlet UITextView *contentTextView;
+@property (weak, nonatomic) IBOutlet UITextView *replyTextView;
 
 @property (weak, nonatomic) IBOutlet UIButton *moreBtn;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabei;
