@@ -39,16 +39,11 @@
                             <constraint firstAttribute="width" constant="18" id="sPx-DR-71U"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profile_Split" translatesAutoresizingMaskIntoConstraints="NO" id="vve-kx-7ra">
-                        <rect key="frame" x="0.0" y="42" width="320" height="1"/>
-                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="vve-kx-7ra" secondAttribute="trailing" id="2KU-H3-l06"/>
                     <constraint firstAttribute="trailingMargin" secondItem="lW1-BU-t28" secondAttribute="trailing" constant="6" id="Bn3-v8-QKE"/>
                     <constraint firstItem="lW1-BU-t28" firstAttribute="leading" secondItem="Yjr-Tu-pvl" secondAttribute="trailing" constant="45" id="DVF-Bi-8lD"/>
                     <constraint firstItem="p62-fR-ndr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="2" id="STi-Lk-2yV"/>
-                    <constraint firstAttribute="bottom" secondItem="vve-kx-7ra" secondAttribute="bottom" id="VYV-ba-cfq"/>
                     <constraint firstItem="lW1-BU-t28" firstAttribute="leading" secondItem="Ocy-ki-tNu" secondAttribute="trailing" constant="35" id="ZnS-WH-eXb"/>
                     <constraint firstItem="lW1-BU-t28" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="aDN-G1-rhn"/>
                     <constraint firstItem="p62-fR-ndr" firstAttribute="bottom" secondItem="Yjr-Tu-pvl" secondAttribute="bottom" constant="-5" id="bXj-1W-KF8"/>
@@ -56,7 +51,6 @@
                     <constraint firstItem="p62-fR-ndr" firstAttribute="centerY" secondItem="lW1-BU-t28" secondAttribute="centerY" id="gCr-9P-p4m"/>
                     <constraint firstItem="p62-fR-ndr" firstAttribute="top" secondItem="Ocy-ki-tNu" secondAttribute="top" constant="5" id="gVu-rG-gek"/>
                     <constraint firstItem="Ocy-ki-tNu" firstAttribute="leading" secondItem="p62-fR-ndr" secondAttribute="trailing" constant="8" symbolic="YES" id="lmt-sg-AYZ"/>
-                    <constraint firstItem="vve-kx-7ra" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="oXn-Yi-iO4"/>
                     <constraint firstItem="lW1-BU-t28" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="p2f-vK-h1N"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Ocy-ki-tNu" secondAttribute="bottom" constant="8" id="pGR-B7-Ec7"/>
                     <constraint firstItem="p62-fR-ndr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-3" id="tL8-Xd-3iB"/>
@@ -75,6 +69,5 @@
     <resources>
         <image name="Dark_Account_Avatar" width="80" height="80"/>
         <image name="Menu_Enter" width="15" height="18"/>
-        <image name="Profile_Split" width="1" height="1"/>
     </resources>
 </document>
