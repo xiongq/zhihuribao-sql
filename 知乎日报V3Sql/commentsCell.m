@@ -18,6 +18,8 @@
     [super awakeFromNib];
     self.avaterImageView.layer.cornerRadius = self.avaterImageView.frame.size.width * 0.5;
     self.avaterImageView.clipsToBounds = YES;
+//    UIImageView *line = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Profile_Split"]];
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
