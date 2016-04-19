@@ -64,6 +64,7 @@
     self.fd_prefersNavigationBarHidden = YES;
 
     [self.themeTableview registerNib:[UINib nibWithNibName:@"StoryListTableViewCell" bundle:nil ] forCellReuseIdentifier:@"storylists"];
+    self.themeTableview.tableFooterView = [[UIView alloc] init];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.ThemeNameLabei.text = self.others.name;
 
@@ -80,6 +81,11 @@
 
         }];
     }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BackTop) name:@"backTop" object:nil];
+}
+-(void)BackTop{
+    if (self.themeTableview.contentOffset.y == 0)return;
+    [self.themeTableview setContentOffset:CGPointMake(0, 0) animated:YES];
 
 }
 -(void)reloadTableViewWithModel:(sideThemeListModel *)model{
@@ -223,6 +229,7 @@
 -(void)dealloc{
     NSLog(@"test ---- %@",self);
     self.themevc.delegate = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 
 }
 @end

@@ -22,6 +22,7 @@
 #import <Masonry.h>
 #import "UIView+Extension.h"
 #import "XQloading-CAShaplayer.h"
+#import "commentsViewController.h"
 
 @interface themeContentViewController ()<ContentToolsViewDelegate, avaterviewDelegate, XQloading_CAShaplayeDelegate, WKUIDelegate, WKNavigationDelegate>
 @property (weak, nonatomic) IBOutlet avaterView         *avaterview;
@@ -35,6 +36,8 @@
 @implementation themeContentViewController{
     BOOL isanimation;
     NSInteger index;
+    ZHNewsModel *tempModel;
+    NSString *tempdic;
 }
 /**
  *  懒加载
@@ -75,10 +78,6 @@
      */
     self.fd_prefersNavigationBarHidden = YES;
     self.automaticallyAdjustsScrollViewInsets = NO;
-
-
-
-
     self.contentTools.delegate = self;
     self.avaterview.delegate = self;
     index = self.indexpath.row;
@@ -87,6 +86,7 @@
         //数据库中-有就加载数据库中的模型，（有一种body是空的，没有存）
 //        NSLog(@"数据库中有数据");
         [self loadHtml:sqlModel];
+
     }else{
 //        NSLog(@"没有数据");
         //数据库中-没有-发送请求，（有一种body是空的）
@@ -104,15 +104,35 @@
                     //模型中body空，加载share-url
                     [self.webContentView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:model.share_url]]];
             }
+
         } Error:^(NSError *error) {
             [self.loading waitReload];
         }];
     }
-
+    [self loadcommients];
     [self.view addSubview:self.webContentView];
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BackTop) name:@"backTop" object:nil];
 }
+-(void)BackTop{
+    if (self.webContentView.scrollView.contentOffset.y == 0)return;
+    [self.webContentView.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 
+}
+-(void)loadcommients{
+    NSString *storyCommitUrl = [NSString stringWithFormat:@"http://news-at.zhihu.com/api/4/story-extra/%ld",(long)self.model.id];
+    AFHTTPSessionManager *manger = [AFHTTPSessionManager manager];
+    manger.requestSerializer     = [AFHTTPRequestSerializer serializer];
+    manger.responseSerializer    = [AFJSONResponseSerializer serializer];
+    [manger GET:storyCommitUrl parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [self.contentTools setComments:responseObject];
+        NSLog(@"contentTools%@",responseObject[@"comments"]);
+        tempdic = responseObject[@"comments"];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"com--错误%@",error);
+    }];
+
+}
 -(void)loadHtml:(themeContentModel *)model{
 //    http://news-at.zhihu.com/api/4/story/7015707/recommenders 这是推荐者
     if ([model.recommenders firstObject]) {
@@ -180,6 +200,7 @@
                 self.model = self.storysArray[index];
 
                 [self NextNewsWithid:self.model.id];
+                [self loadcommients];
 
             }
             if (index == count - 1) {
@@ -201,9 +222,13 @@
             break;
         case comment:
             NSLog(@"评论");
+            commentsViewController *com = [self.storyboard instantiateViewControllerWithIdentifier:@"comments"];
+            com.sumcomm = [NSString stringWithFormat:@"%@条评论",tempdic];
+            com.ids = self.model.id;
+
+            [self.navigationController pushViewController:com animated:YES];
             break;
-        default:
-            break;
+
     }
 
 }
@@ -286,6 +311,9 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
+}
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end
