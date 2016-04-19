@@ -15,7 +15,7 @@ static FMDatabase *_db;
 
 +(void)initialize{
     NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"story.sqlite"];
-//    NSLog(@"path%@",path);
+    NSLog(@"path%@",path);
     _db = [FMDatabase databaseWithPath:path];
     BOOL open = [_db open];
     if (open) {

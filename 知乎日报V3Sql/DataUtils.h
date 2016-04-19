@@ -16,4 +16,6 @@
 +(NSString *)weeksWithDays:(NSString *)day;
 /**秒转24小时*/
 +(NSString *)formateDateWithTime:(NSInteger)time;
+/**判断日期数组是否断了，如果断了就传日期数组排序第二个日期进行判断加载*/
++(void)comparNowDateString:(NSString *)oldDateString;
 @end

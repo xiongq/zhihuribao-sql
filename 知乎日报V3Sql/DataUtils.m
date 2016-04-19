@@ -7,6 +7,8 @@
 //
 
 #import "DataUtils.h"
+#import "NewsRequest.h"
+#import "ZFSqlTools.h"
 
 @implementation DataUtils
 +(NSString *)todayDataWithString{
@@ -60,6 +62,32 @@
     NSDateFormatter *formate = [NSDateFormatter new];
     [formate setDateFormat:@"MM-dd HH:mm"];
     return [formate stringFromDate:date];
+
+}
++(void)comparNowDateString:(NSString *)oldDateString{
+    NSDate *nowdate  = [NSDate date];
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.dateFormat = @"yyyyMMdd";
+    NSDate *olddate = [formatter dateFromString:oldDateString];
+    /**
+     *  计算当前时间与上一次存入数据库的日期差，有差补全数据库
+     */
+    int comp = [nowdate timeIntervalSince1970] - [olddate timeIntervalSince1970];
+    int index = comp/60/60/24;
+    NSLog(@"old%@相差%d天",[NSDate dateWithTimeIntervalSinceNow:-60*60*24],comp/60/60/24);
+    if (index < 0) return;
+    for (int i = 0; i < index; i++) {
+        NSLog(@"%@",[NSDate dateWithTimeIntervalSinceNow:-(60*60*24*i)]);
+        [NewsRequest AFNetworkRequestWith:[formatter stringFromDate:[NSDate dateWithTimeIntervalSinceNow:-(60*60*24*i)]] Succees:^(id dic) {
+            NSLog(@"dic%@",dic);
+            [ZFSqlTools SaveStory:dic];
+        } Error:^(NSError *error) {
+            NSLog(@"error%@",error);
+        }];
+    }
+
+
+
 
 }
 @end

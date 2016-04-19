@@ -83,6 +83,7 @@
     BOOL isloadBottom;
     BOOL isAnimation;
     CGFloat offsetx;
+    BOOL DateJudge;
 }
 static CGFloat const SideMenuAnimationDuration = 0.5f;
 #pragma mark - 懒加载
@@ -125,6 +126,25 @@ static CGFloat const SideMenuAnimationDuration = 0.5f;
     [super viewWillAppear:animated];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(BackTop) name:@"backTop" object:nil];
+    /**
+     *  根据bool值判断，避免反复进行数据库查询判断
+     */
+    if (DateJudge) return;
+    NSArray *dateArray = [NSArray new];
+    dateArray = [[ZFSqlTools StoryWithDate:nil] sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        NSComparisonResult result = [obj1 compare:obj2];
+        return result == NSOrderedAscending;
+
+    }];
+    /**
+     *  数据库中存的日期和请求日期不一样的，请求20160419的新闻，返回的是20160418的新闻。最后一个日期重复这样是避免用户关闭APP时数据库中存取的当天新闻不全
+     */
+//    NSLog(@"%@",dateArray [1]);
+    if (dateArray.count == 0) return;
+    [DataUtils comparNowDateString:dateArray [0]];
+//    [DataUtils comparNowDateString:@"20160415"];
+    DateJudge = YES;
+
 }
 -(void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -169,6 +189,7 @@ static CGFloat const SideMenuAnimationDuration = 0.5f;
     self.sideMenu.delegate = self;
     [self.view addGestureRecognizer:self.pan];
     self.topScrollView.delegate = self;
+
 
 
 
