@@ -292,7 +292,7 @@
     return YES;
 }
 -(void)webViewDidStartLoad:(UIWebView *)webView{
-    [self.loading StartAnimation];
+//    [self.loading StartAnimation];
 }
 -(void)webViewDidFinishLoad:(UIWebView *)webView{
     [self.loading StopAnimation];
