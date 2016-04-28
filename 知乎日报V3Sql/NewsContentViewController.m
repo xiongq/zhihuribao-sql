@@ -27,6 +27,8 @@
 #import <MJExtension.h>
 #import <UINavigationController+FDFullscreenPopGesture.h>
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
 
 
 @interface NewsContentViewController ()<UIWebViewDelegate,UIScrollViewDelegate,ContentToolsViewDelegate,XQloading_CAShaplayeDelegate>
@@ -209,6 +211,7 @@
  *  工具条代理
  */
 -(void)TouchinsideBtnType:(BtnType)BtnType{
+    NSArray *imagesArrays = @[[UIImage imageNamed:@"News_Navigation_Share_Highlight"]];
     switch (BtnType) {
         case arrows:
 //            NSLog(@"返回");
@@ -238,7 +241,36 @@
 
             break;
         case share:
-            NSLog(@"分享");
+            if (imagesArrays) {
+                NSMutableDictionary *shareParams = [NSMutableDictionary new];
+                [shareParams SSDKSetupShareParamsByText:[tempModel.title stringByAppendingFormat:@"(数据来源于知乎日报，测试-shareSDK @xiongqtest )%@",tempModel.share_url]
+                                                 images:nil
+                                                    url:[NSURL URLWithString:tempModel.share_url]
+                                                  title:tempModel.title
+                                                   type:SSDKContentTypeAuto];
+                [shareParams SSDKSetupEvernoteParamsByText:@"test"
+                                                    images:nil
+                                                     title:@"dasdasdasda"
+                                                  notebook:@"First Notebook"
+                                                      tags:@[@"Evernote",@"block"] platformType:SSDKPlatformTypeEvernote];
+
+                [ShareSDK showShareActionSheet:nil
+                                         items:nil
+                                   shareParams:shareParams
+                           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                               switch (state) {
+                                   case SSDKResponseStateSuccess:
+                                       NSLog(@"sucess");
+                                       break;
+                                   case SSDKResponseStateFail:
+                                       NSLog(@"fail");
+                                       break;
+                                   default:
+                                       break;
+                               }
+                           }];
+            }
+
             break;
         case comment:
             NSLog(@"评论");
@@ -258,7 +290,7 @@
  *  scrollview代理
  */
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSLog(@"%f",scrollView.contentOffset.y);
+//    NSLog(@"%f",scrollView.contentOffset.y);
     CGFloat offsetY = scrollView.contentOffset.y;
     if (offsetY > 0) {
         self.topPicTop.constant = - offsetY;
