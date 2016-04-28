@@ -24,6 +24,9 @@
 #import "XQloading-CAShaplayer.h"
 #import "commentsViewController.h"
 
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+
 @interface themeContentViewController ()<ContentToolsViewDelegate, avaterviewDelegate, XQloading_CAShaplayeDelegate, WKUIDelegate, WKNavigationDelegate>
 @property (weak, nonatomic) IBOutlet avaterView         *avaterview;
 @property (weak, nonatomic) IBOutlet ContentToolsView   *contentTools;
@@ -38,6 +41,8 @@
     NSInteger index;
     ZHNewsModel *tempModel;
     NSString *tempdic;
+    /**内容模型*/
+    themeContentModel *contentModel;
 }
 /**
  *  懒加载
@@ -81,11 +86,11 @@
     self.contentTools.delegate = self;
     self.avaterview.delegate = self;
     index = self.indexpath.row;
-    themeContentModel *sqlModel =  [themeStorySQLTool readSQLThemeStoryWithid:self.model.id];
-    if (sqlModel) {
+    contentModel =  [themeStorySQLTool readSQLThemeStoryWithid:self.model.id];
+    if (contentModel) {
         //数据库中-有就加载数据库中的模型，（有一种body是空的，没有存）
 //        NSLog(@"数据库中有数据");
-        [self loadHtml:sqlModel];
+        [self loadHtml:contentModel];
 
     }else{
 //        NSLog(@"没有数据");
@@ -94,15 +99,15 @@
 
             //成功返回数据，转模型存取sqlite
 
-            themeContentModel *model = [themeContentModel mj_objectWithKeyValues:dic];
-            [themeStorySQLTool SaveThemeStory:model];
+            contentModel = [themeContentModel mj_objectWithKeyValues:dic];
+            [themeStorySQLTool SaveThemeStory:contentModel];
 //            NSLog(@"avater-----%lu",(unsigned long)model.recommenders.count);
             //模型中body空
-            if (model.body) {
-                    [self loadHtml:model];
+            if (contentModel.body) {
+                    [self loadHtml:contentModel];
                 }else{
                     //模型中body空，加载share-url
-                    [self.webContentView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:model.share_url]]];
+                    [self.webContentView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:contentModel.share_url]]];
             }
 
         } Error:^(NSError *error) {
@@ -177,6 +182,7 @@
  *  工具栏delegate
  */
 -(void)TouchinsideBtnType:(BtnType)BtnType{
+     NSArray *imagesArray = @[[UIImage imageNamed:@"News_Navigation_Share_Highlight"]];
     switch (BtnType) {
         case arrows:
             //            NSLog(@"返回");
@@ -214,12 +220,49 @@
 
             break;
         case vote:
-            NSLog(@"点赞");
+            NSLog(@"点赞%@",contentModel.title);
+
+
+                NSLog(@"%@",contentModel.share_url);
+
 
             break;
         case share:
             NSLog(@"分享");
-            break;
+
+
+
+            if (imagesArray) {
+                NSMutableDictionary *shareParams = [NSMutableDictionary new];
+                [shareParams SSDKSetupShareParamsByText:[contentModel.title stringByAppendingFormat:@"(分享自 @xiongqtest )%@",contentModel.share_url]
+                                                 images:nil
+                                                    url:[NSURL URLWithString:contentModel.share_url]
+                                                  title:contentModel.title
+                                                   type:SSDKContentTypeAuto];
+                [shareParams SSDKSetupEvernoteParamsByText:@"test"
+                                                    images:nil
+                                                     title:@"dasdasdasda"
+                                                  notebook:@"First Notebook"
+                                                      tags:@[@"Evernote",@"block"] platformType:SSDKPlatformTypeEvernote];
+
+            [ShareSDK showShareActionSheet:nil
+                                     items:nil
+                               shareParams:shareParams
+                       onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
+                           switch (state) {
+                               case SSDKResponseStateSuccess:
+                                   NSLog(@"sucess");
+                                   break;
+                               case SSDKResponseStateFail:
+                                   NSLog(@"fail");
+                                   break;
+                               default:
+                                   break;
+                           }
+                       }];
+            }
+           break;
+
         case comment:
             NSLog(@"评论");
             commentsViewController *com = [self.storyboard instantiateViewControllerWithIdentifier:@"comments"];
@@ -282,25 +325,25 @@
  *  @param ids id
  */
 -(void)NextNewsWithid:(NSInteger)ids{
-    themeContentModel *sqlModel =  [themeStorySQLTool readSQLThemeStoryWithid:ids];
-    if (sqlModel) {
+    contentModel =  [themeStorySQLTool readSQLThemeStoryWithid:ids];
+    if (contentModel) {
         //数据库中-有就加载数据库中的模型，（有一种body是空的，没有存）
         NSLog(@"数据库中有数据");
-        [self loadHtml:sqlModel];
+        [self loadHtml:contentModel];
     }else{
         NSLog(@"没有数据");
         //数据库中-没有-发送请求，（有一种body是空的）
         [NewsRequest GETThemesWithID:ids Succees:^(id dic) {
 //            [self.loading StopAnimation];
             //成功返回数据，转模型存取sqlite
-            themeContentModel *model = [themeContentModel mj_objectWithKeyValues:dic];
-            [themeStorySQLTool SaveThemeStory:model];
+            contentModel = [themeContentModel mj_objectWithKeyValues:dic];
+            [themeStorySQLTool SaveThemeStory:contentModel];
             //模型中body空
-            if (model.body) {
-                [self loadHtml:model];
+            if (contentModel.body) {
+                [self loadHtml:contentModel];
             }else{
                 //模型中body空，加载share-url
-                [self.webContentView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:model.share_url]]];
+                [self.webContentView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:contentModel.share_url]]];
             }
         } Error:^(NSError *error) {
             NSLog(@"%@",error);
