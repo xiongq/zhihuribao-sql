@@ -27,8 +27,17 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
 
     NSLog(@"window");
-    //点击发出通知，在需要回到顶部的控制器注册通知修改contentoffset就好
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"backTop" object:nil];
+
+    NSSet *touche = [event allTouches];
+    UITouch *touch = [touche anyObject];
+    CGPoint touchpoint = [touch locationInView:self.view];
+    NSLog(@"点击坐标%@",NSStringFromCGPoint(touchpoint) );
+#warning 此处会覆盖掉系统左上角返回APP点击事件
+        //点击发出通知，在需要回到顶部的控制器注册通知修改contentoffset就好
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"backTop" object:nil];
+
+
+
 
 }
 
