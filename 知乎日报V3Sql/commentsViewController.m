@@ -162,10 +162,11 @@
     [cell.avaterImageView sd_setImageWithURL:[NSURL URLWithString:model.avatar]];
     [cell.moreBtn setTitle:@"展开" forState:UIControlStateNormal];
 
-
+//    cell.replyTextView.backgroundColor = [UIColor redColor];
     return cell;
 
 }
+
 /**
  *  更改cell高度
  *
@@ -188,20 +189,22 @@
     if (indexpath != nil) {
         commentsCell *cell = [self.commentsTable cellForRowAtIndexPath:indexpath];
         CGFloat textHeight = [self replyHeightWithCell:cell];
-
+        NSLog(@"begin--replyHeight%f  fktextHeight%f",cell.replyTextViewHeight.constant,textHeight);
         [self.commentsTable beginUpdates];
         if (cell.replyTextView.height > textHeight +20) {
             cell.replyTextViewHeight.constant = 33;
             [btn setTitle:@"展开" forState:UIControlStateNormal];
 //            NSLog(@"还原");
         }else{
-            cell.replyTextViewHeight.constant += textHeight;
+            cell.replyTextViewHeight.constant += textHeight -10;
 //            NSLog(@"lasheng");
              [btn setTitle:@"收起" forState:UIControlStateNormal];
         }
         [self.commentsTable endUpdates];
+//        NSLog(@"end--replyHeight%f",cell.replyTextViewHeight.constant);
 
     }
+
 }
 
 /**
