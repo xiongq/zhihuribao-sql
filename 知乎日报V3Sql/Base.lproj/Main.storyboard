@@ -375,8 +375,9 @@
         <!--Navigation Controller-->
         <scene sceneID="KcH-JK-RAD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="C8O-ma-faM" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="homeNavi" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" navigationBarHidden="YES" id="C8O-ma-faM" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Bcy-J3-y4h">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

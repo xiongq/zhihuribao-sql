@@ -7,8 +7,15 @@
 //
 
 #import "StartLaunchViewController.h"
+#import <UIImageView+WebCache.h>
+#import "NewsRequest.h"
+#import "UIView+Extension.h"
+#import "AppDelegate.h"
+#import "ViewController.h"
 
 @interface StartLaunchViewController ()
+@property (weak, nonatomic) IBOutlet UIImageView *ADimageView;
+@property (weak, nonatomic) IBOutlet UIImageView *launchImageView;
 
 @end
 
@@ -16,22 +23,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    [self showADimage];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)showADimage{
+
+    [NewsRequest startAnimationImageWithSize:self.view.size Succees:^(id dic) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            UIImage *temp = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:dic[@"img"]]]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _ADimageView.image = temp;
+
+                [UIView animateWithDuration:2.5f delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+                    _launchImageView.alpha = 0;
+                    _ADimageView.transform = CGAffineTransformMakeScale(1.08, 1.08);
+
+
+                } completion:^(BOOL finished) {
+                    
+                    self.view.window.rootViewController = ((AppDelegate *)[UIApplication sharedApplication].delegate).viewcontroller;
+                }];
+            });
+        });
+    } Error:^(NSError *error) {
+        NSLog(@"error%@",error);
+    }];
+
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)dealloc{
+    NSLog(@"start-dealloc");
 }
-*/
-
 @end
