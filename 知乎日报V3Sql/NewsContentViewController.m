@@ -260,11 +260,27 @@
                            onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end) {
                                switch (state) {
                                    case SSDKResponseStateSuccess:
+                                   {
                                        NSLog(@"sucess");
+                                       UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"分享成功" message:nil preferredStyle:UIAlertControllerStyleAlert];
+                                       UIAlertAction *defulaction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+                                       }];
+                                       [alertView addAction:defulaction];
+                                       [self presentViewController:alertView animated:YES completion:nil];
                                        break;
+                                   }
                                    case SSDKResponseStateFail:
-                                       NSLog(@"fail");
+                                   {
+
+                                       UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"分享失败" message:[NSString stringWithFormat:@"%@",error] preferredStyle:UIAlertControllerStyleAlert];
+                                       UIAlertAction *defulaction = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+                                       }];
+                                       [alertView addAction:defulaction];
+                                       [self presentViewController:alertView animated:YES completion:nil];
                                        break;
+                                   }
                                    default:
                                        break;
                                }
@@ -273,14 +289,17 @@
 
             break;
         case comment:
-            NSLog(@"评论");
+
+
 //            [self commentsWithids:tempModel.id];
+        {
             commentsViewController *com = [self.storyboard instantiateViewControllerWithIdentifier:@"comments"];
             com.sumcomm = [NSString stringWithFormat:@"%@条评论",tempdic];
             com.ids = tempModel.id;
 
             [self.navigationController pushViewController:com animated:YES];
             break;
+        }
 
     }
 }
