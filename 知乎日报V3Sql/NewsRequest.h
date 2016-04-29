@@ -8,14 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "ZHNewsModel.h"
+#import <UIKit/UIKit.h>
 
 typedef void(^success)(id dic);
 typedef void(^error)(NSError *error);
 
 @interface NewsRequest : NSObject
 @property(strong, nonatomic) void (^testblock)(NSDictionary *dic);
++(instancetype)shareRequest;
 +(void)todayNEWSRequest;
 +(void)nextNEWSRequsetWith:(NSString *)days;
+-(void)test;
 /**
  *  评论请求
  *
@@ -32,4 +35,6 @@ typedef void(^error)(NSError *error);
 +(void)beforeLastID:(NSInteger)ids Succees:(success)Success Error:(error)Error;
 +(void)AFNetworkRequestWith:(NSString *)days Succees:(success)Success Error:(error)Error;
 +(void)avaterinfo:(NSString *)url Succees:(success)Success Error:(error)Error;
+
++(void)startAnimationImageWithSize:(CGSize)size Succees:(success)Success Error:(error)Error;
 @end
