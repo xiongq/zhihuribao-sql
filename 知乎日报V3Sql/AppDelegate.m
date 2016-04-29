@@ -20,6 +20,8 @@
 
 #import <EventKit/EventKit.h>
 
+#import "StartLaunchViewController.h"
+
 
 
 @interface AppDelegate ()
@@ -30,6 +32,16 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    self.window = [UIWindow new];
+    UIStoryboard *temp = [UIStoryboard storyboardWithName:@"StartLaunchViewController" bundle:[NSBundle mainBundle]];
+    StartLaunchViewController *launchvc =[temp instantiateViewControllerWithIdentifier:@"LaunchStoryboard"];
+    self.window.rootViewController = launchvc;
+    [self.window makeKeyWindow];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self viewcontroller];
+    });
+
 
     [StatusWindow sharedTopWindow].hidden = NO;
 
@@ -80,7 +92,15 @@
 
     return YES;
 }
-
+-(UIViewController *)viewcontroller{
+    if (!_viewcontroller) {
+    
+//        _viewcontroller  = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]].instantiateInitialViewController;
+        UIStoryboard *temp = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        _viewcontroller = [temp instantiateViewControllerWithIdentifier:@"homeNavi"];
+    }
+    return _viewcontroller;
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
